@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+ {% block slidebar %}
+
+    <!-- ##### Header Area End ##### -->
+{% endblock %}
+{% block downslidebar %}
+                {% if messages %}
+                <ul>
+                        {% for message in messages %}
+                            <li><a style="color:red; text-align: center;">{{ message }}</a></li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+                <img src="{% url 'video_feed' %}">
+                
+            
+{% endblock %}
+<!-- ##### Google Maps ##### -->
+{% block upperusefullink %}
+{% endblock%}
+{% block usefullink %}
+{% endblock %}
+       
+
