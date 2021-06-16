@@ -1,59 +1,34 @@
 {% extends 'base.html' %}
- {% block slidebar %}
-        <!-- Navbar Area -->
-        <div class="academy-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="academyNav">
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+{% block slidebar %}
+{% endblock %}
+{% block downslidebar %}
+<form action="leaveprof" method="POST">
+    {% csrf_token %}
+    <div class="blog-area mt-10 section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="academy-blog-posts">
+                        <div class="row">
+                            <img src="{% url 'video_feed' %}">
                         </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- close btn -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="{% url 'index' %}">Home</a></li>
-                                    <li><a href="{% url 'addexam' %}"> Add Exam</a></li>
-                                    <li><a href="{% url 'profcourseDetails' %}">Add Course</a></li>
-                                    
-                                </ul>
-                            </div>
-                            <!-- Nav End -->
+                    </div> 
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="academy-blog-sidebar">
+                        <div class="blog-post-search-widget mb-30">
+                            <button type="submit" class="btn" style="background-color:red",>Leave</button>  
                         </div>
-
-                        <!-- Calling Info -->
-                        <div class="calling-info">
-                            <div class="call-center">
-                                <a href="tel:03326549999"><i class="icon-telephone-2"></i> <span>(033) 2654-9999</span></a>
-                            </div>
-                        </div>
-                    </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
+    </div>
+</form>
 {% endblock %}
-{% block downslidebar %}
-    
-                <img src="{% url 'video_feed' %}">
-                
-            
-    {% endblock %}
-    <!-- ##### Google Maps ##### -->
-    {% block upperusefullink %}
-    {% endblock%}
-    {% block usefullink %}
-    {% endblock %}
+{% block upperusefullink %}
+{% endblock%}
+{% block usefullink %}
+{% endblock %}
        
+

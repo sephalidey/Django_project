@@ -50,7 +50,7 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb-area bg-img" style="background-image: url('/static/img/bg-img/breadcumb.jpg');">
         <div class="bradcumbContent">
-            <h2>PROF. REGISTRATION</h2>
+            <h2>Prof. registration</h2>
             <form action="profregistration" method="POST">
                 {% csrf_token %}
               <div class="container signin">
@@ -69,16 +69,13 @@
                 <input class="input-field" type="text" placeholder="Email" name="email">
               </div>
               <div class="input-containerx">
-                <label><b> NAME OF PROGAMME</b> </label>   
-                <select name="course">  
-                    <option value="Computer Science" >Computer Science</option>  
-                    <option value="Physic" >Physic</option>  
-                    <option value="Mathematics" >Mathematics</option>  
-                    <option value="Yoga" >Yoga</option>  
-                    <option value="Sanskrit" >Sanskrit</option>  
-                    <option value="Sports Science" >Sports Science</option>  
-                    <option value="Data Science" >Data Science</option>  
-                </select>  
+                <i class='fa fa-building icon'></i>  
+                        <select name="course">   
+                             <option>----Department----</option>  
+                                {% for entry in itemno %}
+                                  <option value="{{ entry.deptId }}">{{ entry.deptName }}</option>
+                                {% endfor %} 
+                        </select>   
             </div>
             <br>
               <div class="input-container">

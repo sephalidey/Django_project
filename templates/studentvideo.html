@@ -1,21 +1,31 @@
 {% extends 'base.html' %}
- {% block slidebar %}
-
-    <!-- ##### Header Area End ##### -->
+{% block slidebar %}
 {% endblock %}
 {% block downslidebar %}
-                {% if messages %}
-                <ul>
-                        {% for message in messages %}
-                            <li><a style="color:red; text-align: center;">{{ message }}</a></li>
-                        {% endfor %}
-                </ul>
-                {% endif %}
-                <img src="{% url 'video_feed' %}">
-                
-            
+<form action="leave" method="POST">
+    {% csrf_token %}
+    <div class="blog-area mt-10 section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="academy-blog-posts">
+                        <div class="row">
+                            <img src="{% url 'video_feed' %}">
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="academy-blog-sidebar">
+                        <div class="blog-post-search-widget mb-30">
+                            <button type="submit" class="btn" style="background-color:red",>Leave</button>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}
-<!-- ##### Google Maps ##### -->
 {% block upperusefullink %}
 {% endblock%}
 {% block usefullink %}

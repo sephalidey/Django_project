@@ -1,3 +1,4 @@
+from django.shortcuts import render,redirect
 from cv2 import cv2
 import os,urllib.request
 import numpy as np
@@ -6,10 +7,16 @@ from django.http.response import StreamingHttpResponse
 from gaze_tracking import GazeTracking
 from django.contrib import messages
 import dlib
+import pickle
 
-gaze = GazeTracking()
-camera = cv2.VideoCapture(0)
+
+
+#gaze = GazeTracking()
+#camera = cv2.VideoCapture(0)
+#print('monojit camera outside function')
 def gen_frames():
+	gaze = GazeTracking()
+	camera = cv2.VideoCapture(0)
 	while True:
 		success,frame=camera.read()
 		if not success:
@@ -34,6 +41,15 @@ def gen_frames():
 			frame=buffer.tobytes()
 			yield(b'--frame\r\n'
 					b'Content-Type:image/jpeg\r\n\r\n'+ frame + b'\r\n')
+
+def leave(request):
+	if request.method == 'POST':
+		return redirect('/') 
+
+def leaveprof(request):
+	if request.method == 'POST':
+		return redirect('/')
+
 			
 
 

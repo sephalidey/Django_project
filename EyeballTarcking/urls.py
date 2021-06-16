@@ -1,6 +1,8 @@
 from django.urls import path
 
 from .import views
+from .import camera as cam
+
 
 urlpatterns = [
     path('', views.index,name="index"),
@@ -19,4 +21,8 @@ urlpatterns = [
     #path('video',views.video,name="video"),
     path('video_feed', views.video_feed, name='video_feed'),
     path('studentvideo',views.studentvideo,name="studentvideo"),
+    path('leave',cam.leave,),
+    path('goto',views.goto,name="goto"),
+    path('leaveprof',cam.leaveprof,name="leaveprof"),
+    path('studentgo',views.studentgo,name="studentgo"),
 ]

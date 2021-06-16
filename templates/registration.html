@@ -56,7 +56,7 @@
                 
 
                 <div id="mydivon" style="display:block">
-                    <h2>STUDENT REGISTRATION</h2>
+                    <h2>Student Registration</h2>
                     <div class="container signin">
                         <p>Already have an account? <a href="{% url 'login' %}">Sign in</a>.</p>
                     </div>
@@ -115,9 +115,9 @@
                     </div>
                     <br>
                     <div class="input-containerx">
-                        <label><b> NAME OF PROGAMME</b> </label>   
+                       <i class='fa fa-building icon'></i>   
                         <select name="course">   
-                             <option>----SELECT----</option>  
+                             <option>----Department----</option>  
                                 {% for entry in itemno %}
                                   <option value="{{ entry.deptId }}">{{ entry.deptName }}</option>
                                 {% endfor %} 

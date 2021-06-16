@@ -5,11 +5,14 @@ from django.contrib import messages
 from django.http.response import StreamingHttpResponse
 from cv2 import cv2
 import numpy as np
+from datetime import date
+from datetime import time
+from datetime import datetime
 #from .camera import VideoCamera
 import dlib
 from gaze_tracking import GazeTracking
 from .import camera
-# Create your views here.
+
 def index(request):
     return render(request,'index.html')
 
@@ -54,10 +57,13 @@ def courseDetails(request):
     return render(request,"studentCourseDetails.html", stu)
 
 def profcourseDetails(request):
-    data = course.objects.filter(department=request.session['dept'])
+    value = department.objects.get(deptId = request.session['dept'])
+    data = course.objects.filter(department=value.deptName)
+    print(data)
     prof = {
         "prof_number": data
     }
+    print(prof)
     return render(request,"profcourse.html", prof)
 
 def registration(request):
@@ -93,8 +99,10 @@ def login(request):
     if request.method == 'POST':
         try:
             data =  studentRegistration.objects.get(stdReg_id=request.POST['id'])
+            request.session['studid'] = request.POST['id']
             if data.password == request.POST['psw']:
-                return render(request,'studentexam.html') 
+                #return render(request,'studentexam.html')
+                return redirect(studentgo) 
             else:
                 messages.info(request," Invalid Student Id or Password")
                 return render(request,'login.html')
@@ -104,22 +112,55 @@ def login(request):
     else:
         return render(request,'login.html')
 
+def studentgo(request):        
+    std = student_course.objects.filter(student_id=request.session['studid'])
+    for course in std:
+        try:
+            examdata = examenroll.objects.get(courseId_id=course.course_id)
+            now = datetime.now().time()
+            #h=time.now()
+            print(now)
+            if examdata.date == date.today():
+                print(examdata.starttime)
+                if examdata.starttime <= now and  examdata.endtime >= now:
+                    examdata.isactive = 'Y'
+                    examdata.save()
+                    value=examenroll.objects.all().filter(courseId_id=course.course_id).values()
+                    exam = {
+                        "examItem": value
+                    }
+                    return render(request, "studentexam.html", exam)
+                else :
+                    examdata.isactive = 'N'
+                    examdata.save()
+            else:
+                examdata.isactive = 'N'
+                examdata.save()
+        except:
+            pass    
+    messages.info(request,"You have no Exam now")
+    return render(request,'studentexam.html')
 
 def profregistration(request):
     if request.method == 'POST':
         pid = request.POST['pid']
         pname = request.POST['username']
         mail = request.POST['email']
-        deptid = department.objects.get(deptName=request.POST['course'])
+        deptid = request.POST['course']
         pasw = request.POST['password']
         ph = request.POST['phone']
-        obj = profRegistration(pfRegId=pid,pname=pname,email=mail,deptId=deptid,password=pasw,phone=ph)
+        print(deptid)
+        obj = profRegistration(pfRegId=pid,pname=pname,email=mail,deptId_id=deptid,password=pasw,phone=ph)
         obj.save()
         request.session['pid'] = request.POST['pid']
         request.session['dept'] = request.POST['course']
         return redirect(profcourseDetails)
     else:
-        return render(request,'profReg.html')
+        data = department.objects.all()
+        item = {
+            "itemno":data
+        }
+        return render(request,'profReg.html',item)
 
 
 
@@ -128,10 +169,11 @@ def proflogin(request):
         try:
             data =  profRegistration.objects.get(pfRegId=request.POST['pid'])
             request.session['pid'] = request.POST['pid']
-            dept = department.objects.get(deptId =data.deptId_id)
-            request.session['dept'] = dept.deptName
+            #dept = department.objects.get(deptId =data.deptId_id)
+            request.session['dept'] = data.deptId_id
             if data.password == request.POST['psw']:
-                return render(request,'exam.html')
+                #return render(request,'exam.html')
+                return redirect(goto)
             else:
                 messages.info(request,"Invalid Professor Id or Password")
                 return render(request,'profLogin.html')
@@ -141,6 +183,37 @@ def proflogin(request):
     else:
         return render(request,'profLogin.html')
 
+
+def goto(request):
+    dept=request.session['dept']
+    request.session['dept']=dept
+    prof = prof_course.objects.filter(prof_id=request.session['pid'])
+    for course in prof:
+        try:
+            examdata = examenroll.objects.get(courseId_id=course.course_id)
+            now = datetime.now().time()
+            #h=time.now()
+            print(now)
+            if examdata.date == date.today():
+                print(examdata.starttime)
+                if examdata.starttime <= now and  examdata.endtime >= now:
+                    examdata.isactive = 'Y'
+                    examdata.save()
+                    value=examenroll.objects.all().filter(courseId_id=course.course_id).values()
+                    exam = {
+                        "examItem": value
+                    }
+                    return render(request, "exam.html", exam)
+                else :
+                    examdata.isactive = 'N'
+                    examdata.save()
+            else:
+                examdata.isactive = 'N'
+                examdata.save()
+        except:
+            pass    
+    messages.info(request,"You have no Exam now")
+    return render(request,'exam.html')
 
 
 def profcourseenroll(request):

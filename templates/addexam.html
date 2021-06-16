@@ -47,7 +47,7 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb-area bg-img" style="background-image: url('/static/img/bg-img/breadcumb.jpg');">
        <div class="bradcumbContent">
-            <h2>ADD EXAM</h2>
+            <h2>Add Exam</h2>
        </div>
     </div>
     <form action="addexam" method="POST">
@@ -74,7 +74,7 @@
                                                 <select name="cid"> 
                                                     <option>----SELECT----</option>  
                                                     {% for entry in courseId %}
-                                                      <option value="{{ entry.cid }}">{{ entry.course_id }}</option>
+                                                      <option value="{{ entry.course_id }}">{{ entry.course_id }}</option>
                                                     {% endfor %} 
                                                 </select>
                                             </td> 

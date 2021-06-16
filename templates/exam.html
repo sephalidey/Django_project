@@ -43,30 +43,42 @@
             </div>
         </div>
     </header>
-    <!-- ##### Header Area End ##### -->
 {% endblock %}
 {% block downslidebar %}
-    <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb-area bg-img" style="background-image: url('/static/img/bg-img/breadcumb.jpg');">
        <div class="bradcumbContent">
             <h2>DASHBOARD</h2>
        </div>
     </div>
-    <form action="eye" method="POST">
+<form action="eye" method="POST">
         {% csrf_token %}
         <div class="top-popular-courses-area mt-10 section-padding-100-70">
-            <div class="col-12 ">
-                
-                <button type="submit" class="btn">Submit</button>
-                
-             </div>
+            <div class="col-12  ">
+                <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+                    <div class="blog-post-thumb mb-100">
+                        {% if messages %}
+                            <ul>
+                                {% for message in messages %}
+	                                <li><a style="color:red; text-align: center;font-size: large;">{{ message }}</a></li>
+                                 {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% for item in examItem %}
+                            {% if item.isactive == "Y" %}
+                                <p style="color:red;font-size: large;"><b>Your {{item.courseId_id}} examination is at {{item.starttime }} to {{item.endtime }} on {{item.date }}  <button type="submit" style="background-color:blue", >GO</button></b></p>   
+                                    <br>    
+                            {% else %}
+                                 <p style="color:red;font-size: large;">Sorry !!!!! No EXAM</p>
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-    <!-- ##### Breadcumb Area End ##### -->
-    {% endblock %}
-    <!-- ##### Google Maps ##### -->
-    {% block upperusefullink %}
-    {% endblock%}
-    {% block usefullink %}
-    {% endblock %}
+</form>
+{% endblock %}
+{% block upperusefullink %}
+{% endblock%}
+{% block usefullink %}
+{% endblock %}
        

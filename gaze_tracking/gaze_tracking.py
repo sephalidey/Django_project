@@ -104,9 +104,9 @@ class GazeTracking(object):
             return (pupil_left + pupil_right) / 2
 
     def is_right(self):
-        """Returns true if the user is looking to the right"""
+        """Returns true if the user is looking to the right 0.35"""
         if self.pupils_located:
-            return self.horizontal_ratio() <= 0.35
+            return self.horizontal_ratio() <= 0.65
 
     def is_left(self):
         """Returns true if the user is looking to the left"""
